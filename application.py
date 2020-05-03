@@ -2,6 +2,7 @@ import os
 from flask import Flask, session, render_template, request,  redirect, url_for
 from flask_session import Session
 import myDatabase
+from req import req
 
 app = Flask(__name__)
 
@@ -70,20 +71,29 @@ def signUp():
     return render_template("signUp.html")
 
 
-@app.route("/search")
+@app.route("/search",  methods=["GET"])
 def search():
-    if 'user_id' in session:
+    if 'user_id' not in session:
+        return redirect(url_for("index"))
         print(session)
-        return render_template("search.html", username=session["username"])
-
-    return redirect(url_for("index"))
-
+    # args contains the URL encoded parameters from a GET request while request. form contains POST data
+    query = request.args.get("search")
+    if request.method == "GET" and query:
+        result = db.search(query)
+        return render_template("search.html", username=session["username"], search=result)
+    return render_template("search.html", username=session["username"])
 
 @app.route('/sign_out')
 def sign_out():
-    session.clear()
+    session.clear() #TODO pop
     return redirect(url_for('index'))
 
+
+@app.route("/book_page/<string:isbn>", methods=["POST", "GET"])
+def book_page(isbn):
+    print(isbn)
+    book = db.get_book(isbn)
+    return render_template("book_page.html", book = book)
 
 if __name__ == '__main__':
 

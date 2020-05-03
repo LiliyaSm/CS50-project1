@@ -1,12 +1,12 @@
 {% extends "layout.html" %} {% block body %}
 
 
-<div class="wrap">
+<div class="wrap-main">
   
   
   <div class="row justify-content-center">       
     
-    <form class="col-lg-4" method="POST">
+    <form class="col-lg-6" method="POST">
       {% if error %}
       <div class="alert alert-danger" role="alert">
         {{error}}
@@ -21,18 +21,16 @@
           name="username"
           required="required"          
         />
-        {{ errName }}
       </div>
       <div class="pb-2 form-group">
         <label for="password">Enter your password</label>
         <input type="password" class="form-control" name="password" required="required" />
-        {{ errPassword }}
       </div>
       <button type="submit" class="btn btn-primary">Create Account</button>
     </form>
   </div>
   <div class="pt-2 row justify-content-center">
-    <div class="col-lg-4"><a href="{{ url_for('index') }}">Go back</a></div>
+    <div class="col-lg-6"><a href="{{ url_for('index') }}">Go back</a></div>
   </div>
 </div>
 

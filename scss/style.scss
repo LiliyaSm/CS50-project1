@@ -1,19 +1,19 @@
-$yellow : #f5ed7c;
-
+$yellow: #f5ed7c;
 
 body {
   font-family: "Tahoma", sans-serif;
-  // min-height: 100vh;
+  min-height: 100vh;
   background-color: $yellow;
 }
 
-.wrap-header{
+.wrap-header,
+.wrap-main {
   max-width: 1024px;
   margin: 0 auto;
 }
 
-.wrap {
-  padding-top: 20vh; 
+.wrap-main {
+  padding: 10% 0;
 }
 
 .site-header {
@@ -46,8 +46,7 @@ body {
   text-align: right;
 }
 
-.greeting a
- {
+.greeting a {
   pointer-events: none;
 }
 
@@ -59,4 +58,25 @@ body {
 
 .site-title .blue {
   color: #85dce8;
+}
+
+// .main {
+//   text-align: center;
+// }
+
+.form-inline .form-control.search {
+  width: 600px;
+}
+
+table {
+  background-color: #5296d9;
+}
+
+@media (max-width: 995px) {
+  .nav-item,
+  .main,
+  .site-title,
+  .site-header a {
+    text-align: center;
+  }
 }

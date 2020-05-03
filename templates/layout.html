@@ -16,7 +16,7 @@
     <header class="site-header">
             <div class = "wrap-header">
                 <ul class="nav nav-fill">
-                    <li class="nav-item col-lg-4">
+                    <li class="nav-item col-lg-4 col-md-4">
                         <h1 class="site-title"><a href="{{ url_for('index') }}">Search<span class="blue">Book</span></a></h1>
                     </li>
                     {% if username %}
@@ -24,7 +24,7 @@
                         <a class="nav-link" href="#"> Hello, {{username}}</a>
                     </li>                
                 
-                    <li class="nav-item col-lg-2 logout">
+                    <li class="nav-item col-lg-2 col-md-2 logout">
                         <a class="nav-link" href="{{ url_for('sign_out') }}">Log out</a>
                     </li>
                     {% endif %}

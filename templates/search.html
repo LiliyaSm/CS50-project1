@@ -1,8 +1,44 @@
 {% extends "layout.html" %} {% block body %}
 
+<div class="wrap-main">
+  <div class="main">
+    
+    <div class="mb-4 row justify-content-center">
+      <form class="form-inline" method="GET">
+        <input
+          type="search"
+          class="search form-control"
+          name="search"
+          placeholder="Enter title, author or ISBN"
+          aria-label="search"
+          required="required"
+        />
 
-<div class="wrap">
-  Search page!
+        <button class="btn btn-outline-success m-2 my-sm-0" type="submit">
+          Search
+        </button>
+      </form>
+    </div>
+
+    <div class="book_list">
+      {% if search %}
+      <h1>Searching results:</h1>
+      <ol>
+        {% for item in search %}
+        <li>
+          <a href="{{ url_for('book_page', isbn=item.isbn) }}">
+          {{ item.title }},
+          {{ item.author }}
+        </a>
+
+        </li>
+        {% else %}
+        <li>No books.</li>
+        {% endfor %}
+      </ol>
+      {% endif %}
+    </div>
+  </div>
 </div>
 
 {% endblock %}
