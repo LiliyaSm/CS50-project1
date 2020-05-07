@@ -1,11 +1,14 @@
 from settings import DATABASE_URL
 from sqlalchemy import create_engine
-from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey
+from sqlalchemy import Table, Column, Integer, String, MetaData
 import csv
+import traceback
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 
-def books():
+def create_books():
+    #create table "books" and import data from books.csv
+
     engine = create_engine(DATABASE_URL)
     db = scoped_session(sessionmaker(bind=engine))
     metadata = MetaData()
@@ -19,25 +22,23 @@ def books():
                         )
     try:
         metadata.create_all(engine)
-        print("Tables created")
+        print("Table created")
     except Exception as e:
         print("Error occurred during Table creation!")
+        traceback.print_exc()
         print(e)
 
     with open('books.csv', 'r') as f:
-        order = ["isbn", "title", "author", "publication year"]
-        reader = csv.DictReader(f, fieldnames=order)
-        next(reader)  # Skip the header row.
-        reader = list(reader)
+        reader = csv.DictReader(f, delimiter=',') # Skip the header row automatically
         for row in reader:
-            insert_query = "INSERT INTO books (isbn, title, author, publication_year) VALUES (:isbn, :title, :author, :publication_year)"            
+            insert_query = "INSERT INTO books (isbn, title, author, publication_year) VALUES (:isbn, :title, :author, :publication_year)"
             print(row)
-            db.execute(insert_query, {"isbn": row["isbn"], "title": row["title"], "author": row["author"], "publication_year": row["publication year"]})
+            db.execute(insert_query, {"isbn": row["isbn"], "title": row["title"],
+                                      "author": row["author"], "publication_year": row["year"]})
+        db.commit()
 
-    db.commit()
-    
 
 if __name__ == '__main__':
-    books()
+    create_books()
 
 

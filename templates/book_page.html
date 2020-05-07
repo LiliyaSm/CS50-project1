@@ -1,13 +1,14 @@
 {% extends "layout.html" %} {% block body %}
 
-<div class="wrap-main">
   <div class="main">
     <table class="table table-bordered text-center mb-5">
       <thead class="thead-light">
-        <th scope="col">ISBN number</th>
-        <th scope="col">Title</th>
-        <th scope="col">Author</th>
-        <th scope="col">Publication year</th>
+        <th class="align-middle" scope="col">ISBN number</th>
+        <th class="align-middle" scope="col">Title</th>
+        <th class="align-middle" scope="col">Author</th>
+        <th class="align-middle" scope="col">Publication year</th>
+        <th class="align-middle" scope="col">Average rating from Goodreads</th>
+        <th class="align-middle" scope="col">Number of ratings from Goodreads</th>
       </thead>
       <tbody>
         <tr>
@@ -15,38 +16,49 @@
           <td>{{book.title}}</td>
           <td>{{book.author}}</td>
           <td>{{book.publication_year}}</td>
+          <td style="width: 16.66%">{{review_counts.average_rating}}</td>
+          <td style="width: 16.66%">{{review_counts.work_ratings_count}}</td>
         </tr>
       </tbody>
     </table>
 
-    <form class = "mb-3" method="post">
+    {% if no_review %}
+    <form class="mb-3" method="post">
       <div class="form-group">
-        <label for="exampleFormControlTextarea1">Leave a review</label>
+        <label for="review">Leave a review</label>
         <textarea
           class="form-control"
-          id="exampleFormControlTextarea1"
+          id="review"
           rows="4"
+          name="review"
           required
         ></textarea>
       </div>
-      <div class = form-inline>
+      <div class="form-inline">
         <div class="form-group mb-3">
           <label for="rating">Give rating:</label>
-          <select class="form-control ml-3" id="rating" required>
-            <option value="">None</option>
-            <option value="1" >1</option>
-            <option value="1">2</option>
-            <option value="1">3</option>
-            <option value="1">4</option>
-            <option value="1">5</option>
+          <select class="form-control ml-3" id="rating" name="rating" required>
+            <option value="">Choose rate</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
           </select>
         </div>
       </div>
       <button type="submit" class="btn btn-primary">Post review</button>
     </form>
+    {% endif %}
 
-    <h2 class="text-center">Reviews</h2>
-    <div class="card">
+    <div class="pt-2 row">
+      <div class="col-lg-6"><a href="{{ url_for('search') }}">Go back</a></div>
+    </div>
+
+    <h2 class="text-center mb-4">Reviews</h2>
+    {% if (reviews.rowcount != 0) %} {% for item in reviews %}
+
+    <div class="card mb-4">
       <div class="card-body">
         <div class="row">
           <div class="col-md-2">
@@ -55,28 +67,27 @@
               class="img img-rounded img-fluid"
             />
           </div>
-          <div class="col-md-10 ">
-            <p >
-              <span class="float-left"><strong>Nick</strong></span>
+          <div class="col-md-10">
+            <p>
+              <span class="float-left"><strong>{{item["name"]}}</strong></span>
               <span class="float-right"
-                ><strong>Rating: 5 stars out of 5 </strong></span
+                ><strong
+                  >Rating: {{item["rating"]}} stars out of 5
+                </strong></span
               >
             </p>
-            
+
             <div class="clearfix"></div>
-            <p class= "mt-3">
-              Lorem Ipsum is simply dummy text of the pr make but also the leap
-              into electronic typesetting, remaining essentially unchanged. It
-              was popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
+            <p class="mt-3">
+              {{item["review"]}}
             </p>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
+    {% endfor %} {% else %}
+    <h4 class="text-center">There is no any reviews</h4>
+    {% endif %}
+  </div>
   {% endblock %}
-</div>

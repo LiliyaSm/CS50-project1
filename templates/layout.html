@@ -9,30 +9,50 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}" />
-    <title>My Website!</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename='styles/style.css') }}"
+    />
+    <title>BookReview</title>
   </head>
-  <body>    
+  <body>
     <header class="site-header">
-            <div class = "wrap-header">
-                <ul class="nav nav-fill">
-                    <li class="nav-item col-lg-4 col-md-4">
-                        <h1 class="site-title"><a href="{{ url_for('index') }}">Search<span class="blue">Book</span></a></h1>
-                    </li>
-                    {% if username %}
-                    <li class="nav-item greeting">
-                        <a class="nav-link" href="#"> Hello, {{username}}</a>
-                    </li>                
-                
-                    <li class="nav-item col-lg-2 col-md-2 logout">
-                        <a class="nav-link" href="{{ url_for('sign_out') }}">Log out</a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
-    </header>
-        {% block body %}
-        {% endblock %}
+      <div class="wrap-header">
+        <ul class="nav nav-fill">
+          <li class="nav-item col-lg-4 col-md-4">
+            <h1 class="site-title">
+              <a href="{{ url_for('index') }}"
+                >Book<span class="blue">Review</span></a
+              >
+            </h1>
+          </li>
+          {% if session["username"] %}
+          <li class="nav-item greeting">
+            <a class="nav-link" href="#"> Hello, {{session["username"]}}</a>
+          </li>
 
+          <li class="nav-item col-lg-2 col-md-2 logout">
+            <a class="nav-link" href="{{ url_for('sign_out') }}">Log out</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </header>
+    <div class="wrap-main">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+         {% if messages %}
+          {% for category, message in messages %}
+
+          <div class="alert alert-{{category}} text-center" role="alert">
+            {{ message }}
+          </div>
+
+          {% endfor %}
+        {% endif %} 
+      {% endwith %}
+
+      {% block body %} 
+      {% endblock %}
+    </div>
   </body>
 </html>
