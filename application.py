@@ -3,7 +3,7 @@ from flask import Flask, session, render_template, request,  redirect, url_for, 
 from flask_session import Session
 import myDatabase
 from goodreads import goodreads
-from login_required import loginRequired
+from loginRequired import login_required
 
 app = Flask(__name__)
 

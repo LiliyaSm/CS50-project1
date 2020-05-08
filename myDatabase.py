@@ -104,7 +104,11 @@ class MyDatabase:
         #book search using user input
 
         return self.db.execute(
-            "SELECT isbn, title, author FROM books WHERE title LIKE '%' || :query || '%'", {"query": query})
+            """SELECT isbn, title, author FROM books WHERE 
+            title ILIKE '%' || :query || '%' OR 
+            isbn ILIKE '%' || :query || '%' OR
+            author ILIKE '%' || :query || '%'""",
+             {"query": query})
        
 
     def get_book(self, isbn):
@@ -131,7 +135,7 @@ class MyDatabase:
                 {"book_id": book_id, "user_id": user_id, "review": review, "rating": rating})
         except Exception as e:
             print (e)
-        # self.db.commit()
+        self.db.commit()
 
     def get_reviews(self, book_id):
         #Get a list of reviews for a particular book.
