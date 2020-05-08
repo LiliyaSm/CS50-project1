@@ -8,5 +8,3 @@ flask_session/*
 __pycache__/*
 ## npm packages
 node_modules/*
-## generated styles (css)
-static/styles/*
