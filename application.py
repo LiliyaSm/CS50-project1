@@ -1,4 +1,3 @@
-import os
 from flask import Flask, session, render_template, request,  redirect, url_for, jsonify, flash
 from flask_session import Session
 import myDatabase
@@ -6,10 +5,6 @@ from goodreads import goodreads
 from loginRequired import login_required
 
 app = Flask(__name__)
-
-# Check for environment variable
-# if not os.getenv("DATABASE_URL"):
-#     raise RuntimeError("DATABASE_URL is not set")
 
 # Configure session to use filesystem
 app.config["SESSION_PERMANENT"] = False

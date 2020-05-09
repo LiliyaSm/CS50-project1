@@ -62,10 +62,6 @@ body {
   color: $light-blue;
 }
 
-// .main {
-//   text-align: center;
-// }
-
 .form-inline .form-control.search {
   width: 600px;
 }
@@ -76,14 +72,11 @@ body {
 }
 
 
-
 @media (max-width: 995px) {
-  .nav-item,
-  
+  .nav-item,  
   .site-title,
   .site-header a {
-    text-align: center;
-    
+    text-align: center;    
   }
 
   .wrap-main{
@@ -92,7 +85,6 @@ body {
 }
 
 @media (max-width: 647px) {
-
   .form-inline .form-control.search {
   width: 340px;
 }

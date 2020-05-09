@@ -59,7 +59,7 @@ class MyDatabase:
         print("\n")
 
     def check_user(self, username, password):
-        #TODO password
+        #check password and username
 
         
         user = username.lower()
